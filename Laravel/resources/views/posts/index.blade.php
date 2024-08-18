@@ -32,8 +32,20 @@
         <td>{{ $list->user_name }}</td>
         <td>{{ $list->contents }}</td>
         <td>{{ $list->created_at }}</td>
-        <td><a href="/post/{{ $list->id }}/update-form" class="main-btn">更新</a></td>
-        <td><a href="/post/{{ $list->id }}/delete" class="main-btn main-btn2" onclick="return confirm('削除しても良いですか？')">削除</a></td>
+        <td>
+          <!-- authの認証機能を使用してauthにあるログインユーザーの名前と、listで表示されるuser_nameが一致する場合のみ更新・削除を表示させるようにする。 -->
+          @if (auth()->check() && auth()->user()->name === $list->user_name)
+          <a href="/post/{{ $list->id }}/update-form" class="main-btn">更新</a>
+        </td>
+        <td>
+          <form action="/post/{{ $list->id }}/delete" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="main-btn main-btn2" onclick="return confirm('削除しても良いですか？')">削除</button>
+          </form>
+          <!-- 削除機能も個人が扱う情報なのでPOST通信にする。そのためformを利用する。laravelにはdeleteメソッドがあるためそれを使用するとPOSTメソッドをDELETEメソッドとして扱う事になる。 -->
+          @endif
+        </td>
       </tr>
       @endforeach
     </table>

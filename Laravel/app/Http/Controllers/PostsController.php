@@ -30,6 +30,16 @@ class PostsController extends Controller
     public function create(Request $request)
     {
         $user = Auth::user()->name;
+        $validated = $request->validate([
+            'newPost' => 'required|string|spaces_only|max:100',
+        ], [
+            'newPost.max' => '投稿内容は100文字以下で入力してくださ。',
+        ]);
+        // バリデーションとAPPServiceProvideを追記が必要。
+        //文字数の制限をするにはバリデーションを利用した制限で可能だが、そのままだと「newPostは100文字以上～」という文になってしまうのでvalidateの第二引数にカスタムメッセージを設定する。
+
+        // デバッグ用
+        // dd($validated);
 
         $post = $request->input('newPost');
         DB::table('posts')->insert([
@@ -51,6 +61,15 @@ class PostsController extends Controller
     //投稿内容更新処理
     public function update(Request $request)
     {
+        $validated = $request->validate([
+            'upPost' => 'required|string|spaces_only|max:100',
+        ], [
+            'upPost.max' => '投稿内容は100文字以下で入力してくださ。',
+        ]);
+        // バリデーションとAPPServiceProvideを追記が必要。
+
+        // dd($validated);
+
         $id = $request->input('id');
         $up_contents = $request->input('upPost');
         DB::table('posts')

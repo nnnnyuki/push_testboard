@@ -17,8 +17,10 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
+//redirectを使用して初期ログイン画面「8000」を「login」へ遷移
 
 Route::get('index', [PostsController::class, 'index']);
 
@@ -30,7 +32,7 @@ Route::get('post/{id}/update-form', [PostsController::class, 'updateForm']);
 
 Route::post('/post/update', [PostsController::class, 'update']);
 
-Route::get('post/{id}/delete', [PostsController::class, 'delete']);
+Route::delete('post/{id}/delete', [PostsController::class, 'delete']);
 
 
 //検索ページの実装　トッページを使用する

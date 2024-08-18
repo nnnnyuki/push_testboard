@@ -1,3 +1,5 @@
+
+
 /* 共通ヘッダーCSS */
 li{
   list-style: none;
@@ -17,6 +19,14 @@ a{
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.invalid-feedback {
+  display: block;
+  /* or use 'inline' or 'inline-block' */
+  color: red;
+  /* Ensure text color is visible */
+}
+
 
 .form-group {
   margin-bottom: 15px;
